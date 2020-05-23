@@ -1,21 +1,42 @@
 import { drawLine } from '../util/draw';
 import Cell from './cell';
 
+type Pos = {
+  x: number;
+  y: number;
+}
+
 export default class Grid {
   width: number;
   height: number;
   cellSize: number;
   cols: Cell[][];
+  start?: Cell;
+  destination?: Cell;
 
   constructor(width: number, height: number, cellSize: number) {
     this.width = width;
     this.height = height;
     this.cellSize = cellSize;
     this.cols = Grid.createGrid(width, height);
+    this.setStart(0, 0);
+    this.setDestination(width - 1, height -1);
   }
 
   get = (x: number, y: number) => {
     return this.cols[y][x];
+  }
+
+  setStart(x: number, y: number) {
+    this.start = this.get(x, y);
+  }
+
+  setDestination(x: number, y: number) {
+    this.destination = this.get(x, y);
+  }
+
+  tick = () => {
+
   }
 
   onClick = (screenX: number, screenY: number) => {
@@ -33,7 +54,16 @@ export default class Grid {
   drawCells = (ctx: CanvasRenderingContext2D) => {
     for (let y = 0; y < this.height; y++) {
       for (let x = 0; x < this.width; x++) {
-        this.get(x, y).render(ctx, x * this.cellSize, y * this.cellSize, this.cellSize);
+        const cell = this.get(x, y);
+
+        let overrideColor;
+        if (cell === this.start) {
+          overrideColor = 'white';
+        } else if (cell === this.destination) {
+          overrideColor = 'black';
+        }
+
+        cell.render(ctx, x * this.cellSize, y * this.cellSize, this.cellSize, overrideColor);
       }
     }
   }

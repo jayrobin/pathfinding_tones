@@ -22,7 +22,7 @@ export default class Cell {
     this.neighbors.push(neighbor);
   }
 
-  render = (ctx: CanvasRenderingContext2D, x: number, y: number, size: number) => {
+  render = (ctx: CanvasRenderingContext2D, x: number, y: number, size: number, overrideColor?: string) => {
     let color;
     switch (this.state) {
       case 0:
@@ -34,6 +34,6 @@ export default class Cell {
       default:
         color = 'black';
     }
-    drawSquare(ctx, x, y, size, color);
+    drawSquare(ctx, x, y, size, overrideColor || color);
   }
 }
