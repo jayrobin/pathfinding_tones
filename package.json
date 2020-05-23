@@ -4,17 +4,20 @@
   "homepage": "https://jayrobin.github.io/pathfinding_tones",
   "license": "MIT",
   "dependencies": {
+    "@types/react": "^16.9.35",
+    "@types/react-dom": "^16.9.8",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-scripts": "3.4.1"
   },
   "scripts": {
-    "start": "react-scripts start",
     "build": "react-scripts build",
+    "deploy": "gh-pages -d build",
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx src/",
+    "predeploy": "npm run build",
+    "start": "react-scripts start",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "predeploy": "yarn run build",
-    "deploy": "gh-pages -d build"
+    "types": "tsc --noEmit"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -26,6 +29,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "gh-pages": "2.2.0"
+    "gh-pages": "2.2.0",
+    "typescript": "3.9.3"
   }
 }

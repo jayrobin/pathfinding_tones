@@ -14,6 +14,6 @@ const styles = {
   container: {
     alignItems: 'center',
     display: 'flex',
-    flexDirection: 'column',
+    flexDirection: 'column' as 'column',
   },
 };
