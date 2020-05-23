@@ -1,13 +1,15 @@
 import React from 'react';
+import Grid from '../model/grid';
+import Canvas from './canvas';
 
-export default class App extends React.Component {
-  render() {
-    return (
-      <div style={styles.container}>
-        <h1>Hello, world</h1>
-      </div>
-    );
-  }
+const App = () => {
+  const grid = new Grid(20, 20, 20);
+  return (
+    <div style={styles.container}>
+      <h1>Pathfinding tones</h1>
+      <Canvas grid={grid} />
+    </div>
+  );
 }
 
 const styles = {
@@ -17,3 +19,5 @@ const styles = {
     flexDirection: 'column' as 'column',
   },
 };
+
+export default App;
