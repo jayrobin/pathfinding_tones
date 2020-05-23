@@ -1,8 +1,11 @@
 import React from 'react';
 import Grid from '../model/grid';
+import BFS from '../util/search/bfs';
 import Canvas from './canvas';
 
 const grid = new Grid(20, 20, 20);
+const bfs = new BFS(grid, grid.start, grid.destination);
+grid.setSearch(bfs);
 
 const App = () => {
   const [playing, setPlaying] = React.useState(false);
