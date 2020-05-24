@@ -54,6 +54,7 @@ export default class Grid {
     if (this.search && !this.finished) {
       this.finished = this.search.tick();
     }
+    return this.finished;
   }
 
   onClick = (screenX: number, screenY: number) => {

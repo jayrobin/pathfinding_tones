@@ -5,9 +5,10 @@ type Props = {
   grid: Grid;
   playing: boolean;
   tickDelay: number;
+  onFinished: () => void;
 }
 
-const Canvas = ({ grid, playing, tickDelay }: Props) => {
+const Canvas = ({ grid, playing, tickDelay, onFinished }: Props) => {
   const canvasWidth = grid.width * grid.cellSize;
   const canvasHeight = grid.height * grid.cellSize;
   const canvasRef = React.useRef<HTMLCanvasElement>(null);
@@ -25,7 +26,9 @@ const Canvas = ({ grid, playing, tickDelay }: Props) => {
     let timer: NodeJS.Timeout;
     const tick = () => {
       if (playing) {
-        grid.tick();
+        if (grid.tick()) {
+          onFinished();
+        }
         renderGrid();
         timer = setTimeout(tick, tickDelay);
       }
@@ -36,7 +39,7 @@ const Canvas = ({ grid, playing, tickDelay }: Props) => {
     }
 
     return () => clearTimeout(timer);
-  }, [grid, playing, renderGrid, tickDelay]);
+  }, [grid, onFinished, playing, renderGrid, tickDelay]);
 
   return (
     <>
