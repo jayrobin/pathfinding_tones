@@ -9,6 +9,12 @@ grid.setSearch(bfs);
 
 const App = () => {
   const [playing, setPlaying] = React.useState(false);
+  const reset = () => {
+    setPlaying(false);
+    grid.reset();
+    const bfs = new BFS(grid, grid.start, grid.destination);
+    grid.setSearch(bfs);
+  }
 
   return (
     <div style={styles.container}>
@@ -17,6 +23,7 @@ const App = () => {
         <Canvas grid={grid} playing={playing} tickDelay={100} />
       </div>
       <button onClick={() => setPlaying(!playing)}>{playing ? 'Pause' : 'Play'}</button>
+      <button onClick={reset}>Reset</button>
     </div>
   );
 }

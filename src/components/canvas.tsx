@@ -16,10 +16,9 @@ const Canvas = ({ grid, playing, tickDelay }: Props) => {
     const canvas = canvasRef.current;
     if (canvas) {
       const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
-      ctx.clearRect(0, 0, canvasHeight, canvasWidth);
       grid.render(ctx);
     }
-  }, [canvasHeight, canvasWidth, grid])
+  }, [grid])
 
   React.useEffect(renderGrid, [canvasHeight, canvasWidth, grid]);
   React.useEffect(() => {
@@ -40,11 +39,13 @@ const Canvas = ({ grid, playing, tickDelay }: Props) => {
   }, [grid, playing, renderGrid, tickDelay]);
 
   return (
-    <canvas
-      ref={canvasRef}
-      width={canvasWidth}
-      height={canvasHeight}
-    />
+    <>
+      <canvas
+        ref={canvasRef}
+        width={canvasWidth}
+        height={canvasHeight}
+      />
+    </>
   )
 }
 

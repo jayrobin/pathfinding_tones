@@ -27,6 +27,13 @@ export default class Grid {
     this.destination = this.get(5, 5);
   }
 
+  reset = () => {
+    this.cols = Grid.createGrid(this.width, this.height);
+    this.start = this.get(0, 0);
+    this.finished = false;
+    this.destination = this.get(5, 5);
+  }
+
   get = (x: number, y: number) => {
     return this.cols[y][x];
   }
