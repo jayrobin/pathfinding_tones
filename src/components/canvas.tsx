@@ -12,15 +12,15 @@ const Canvas = ({ grid, playing, tickDelay }: Props) => {
   const canvasHeight = grid.height * grid.cellSize;
   const canvasRef = React.useRef<HTMLCanvasElement>(null);
 
-  const renderGrid = React.useCallback(() => {
+  const renderGrid = React.useCallback((initialRender: boolean = false) => {
     const canvas = canvasRef.current;
     if (canvas) {
       const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
-      grid.render(ctx);
+      grid.render(ctx, initialRender);
     }
   }, [grid])
 
-  React.useEffect(renderGrid, [canvasHeight, canvasWidth, grid]);
+  React.useEffect(() => renderGrid(true), [canvasHeight, canvasWidth, grid, renderGrid]);
   React.useEffect(() => {
     let timer: NodeJS.Timeout;
     const tick = () => {
