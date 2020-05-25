@@ -24,7 +24,7 @@ export default class Grid {
     this.cols = Grid.createGrid(width, height);
     this.start = this.get(0, 0);
     this.finished = false;
-    this.destination = this.get(5, 5);
+    this.destination = this.get(19, 19);
   }
 
   reset = () => {
@@ -54,6 +54,7 @@ export default class Grid {
     if (this.search && !this.finished) {
       this.finished = this.search.tick();
     }
+
     return this.finished;
   }
 
@@ -71,6 +72,10 @@ export default class Grid {
       this.drawAllCells(ctx);
     }
     this.drawGridLines(ctx);
+
+    if (this.search && this.finished) {
+      this.drawPath(ctx, this.search.getShortestPath());
+    }
   }
 
   drawUpdatedCells = (ctx: CanvasRenderingContext2D) => {
@@ -105,7 +110,6 @@ export default class Grid {
     }
   }
 
-
   drawAllCells = (ctx: CanvasRenderingContext2D) => {
     for (let y = 0; y < this.height; y++) {
       for (let x = 0; x < this.width; x++) {
@@ -130,6 +134,16 @@ export default class Grid {
 
     for (let x = 0; x < this.height; x++) {
       drawLine(ctx, x * this.cellSize, 0, x * this.cellSize, this.height * this.cellSize, 'black', 0.3);
+    }
+  }
+
+  drawPath = (ctx: CanvasRenderingContext2D, path: Cell[]) => {
+    for (let i = 0; i < path.length - 1; i++) {
+      const { x: x1, y: y1 } = path[i];
+      const { x: x2, y: y2 } = path[i + 1];
+
+      const offset = Math.floor(this.cellSize / 2);
+      drawLine(ctx, x1 * this.cellSize + offset, y1 * this.cellSize + offset, x2 * this.cellSize + offset, y2 * this.cellSize + offset);
     }
   }
 

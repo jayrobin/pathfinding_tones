@@ -10,5 +10,6 @@ export const drawLine = (ctx: CanvasRenderingContext2D, x1: number, y1: number, 
   ctx.moveTo(x1, y1);
   ctx.lineTo(x2, y2);
   ctx.stroke();
+  ctx.closePath();
   ctx.globalAlpha = 1.0;
 }

@@ -11,11 +11,19 @@ export default class Cell {
   y: number;
   state: CellState = CellState.UNEXPLORED;
   neighbors: Cell[];
+  metadata: {
+    [key: string]: any
+  }
 
   constructor(x: number, y: number) {
     this.x = x;
     this.y = y;
     this.neighbors = [];
+    this.metadata = {};
+  }
+
+  resetMetadata = () => {
+    this.metadata = {};
   }
 
   addNeighbor = (neighbor: Cell) => {
@@ -32,6 +40,10 @@ export default class Cell {
 
   getUnexploredNeighbors = () => {
     return this.neighbors.filter(({ state }) => state === CellState.UNEXPLORED);
+  }
+
+  distanceTo = (cell: Cell) => {
+    return Math.abs(this.x - cell.x) + Math.abs(this.y - cell.y);
   }
 
   render = (ctx: CanvasRenderingContext2D, x: number, y: number, size: number, overrideColor?: string) => {

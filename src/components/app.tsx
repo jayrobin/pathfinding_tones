@@ -1,13 +1,13 @@
 import React from 'react';
 import Grid from '../model/grid';
-import BFS from '../util/search/bfs';
+import Dijkstra from '../util/search/dijkstra';
 import Canvas from './canvas';
 
 const App = () => {
   const initGrid = () => {
     const grid = new Grid(20, 20, 20);
-    const bfs = new BFS(grid, grid.start, grid.destination);
-    grid.setSearch(bfs);
+    const dijkstra = new Dijkstra(grid, grid.start, grid.destination);
+    grid.setSearch(dijkstra);
     return grid;
   }
 
@@ -16,8 +16,8 @@ const App = () => {
   const reset = () => {
     setGrid(initGrid());
     setPlaying(false);
-    const bfs = new BFS(grid, grid.start, grid.destination);
-    grid.setSearch(bfs);
+    const dijkstra = new Dijkstra(grid, grid.start, grid.destination);
+    grid.setSearch(dijkstra);
   }
 
   const onFinished = () => {
@@ -28,7 +28,7 @@ const App = () => {
     <div style={styles.container}>
       <h1>Pathfinding tones</h1>
       <div style={styles.canvasContainer}>
-        <Canvas grid={grid} playing={playing} tickDelay={100} onFinished={onFinished} />
+        <Canvas grid={grid} playing={playing} tickDelay={1} onFinished={onFinished} />
       </div>
       <button onClick={() => setPlaying(!playing)}>{playing ? 'Pause' : 'Play'}</button>
       <button onClick={reset}>Reset</button>
