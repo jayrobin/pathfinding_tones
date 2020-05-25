@@ -30,7 +30,7 @@ const App = () => {
       <div style={styles.canvasContainer}>
         <Canvas grid={grid} playing={playing} tickDelay={10} onFinished={onFinished} />
       </div>
-      <button onClick={() => setPlaying(!playing)}>{playing ? 'Pause' : 'Play'}</button>
+      <button onClick={() => setPlaying(!playing)} disabled={grid.finished}>{playing ? 'Pause' : 'Play'}</button>
       <button onClick={reset}>Reset</button>
     </div>
   );
