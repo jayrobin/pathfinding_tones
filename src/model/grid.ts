@@ -119,7 +119,7 @@ export default class Grid {
         if (cell === this.start) {
           overrideColor = 'white';
         } else if (cell === this.destination) {
-          overrideColor = 'black';
+          overrideColor = 'red';
         }
 
         cell.render(ctx, x * this.cellSize, y * this.cellSize, this.cellSize, overrideColor);

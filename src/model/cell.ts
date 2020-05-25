@@ -1,6 +1,7 @@
 import { drawSquare } from '../util/draw';
 
 enum CellState {
+  OBSTACLE,
   UNEXPLORED,
   EXPLORING,
   EXPLORED
@@ -20,6 +21,10 @@ export default class Cell {
     this.y = y;
     this.neighbors = [];
     this.metadata = {};
+
+    if (Math.random() > 0.75) {
+      this.state = CellState.OBSTACLE;
+    }
   }
 
   resetMetadata = () => {
@@ -49,6 +54,9 @@ export default class Cell {
   render = (ctx: CanvasRenderingContext2D, x: number, y: number, size: number, overrideColor?: string) => {
     let color;
     switch (this.state) {
+      case CellState.OBSTACLE:
+        color = 'black';
+        break;
       case CellState.UNEXPLORED:
         color = 'deepskyblue';
         break;
