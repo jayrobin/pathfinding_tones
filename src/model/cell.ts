@@ -35,6 +35,10 @@ export default class Cell {
     this.neighbors.push(neighbor);
   }
 
+  setUnexplored = () => {
+    this.state = CellState.UNEXPLORED;
+  }
+
   setExplored = () => {
     this.state = CellState.EXPLORED;
   }

@@ -22,28 +22,18 @@ export default class Grid {
     this.height = height;
     this.cellSize = cellSize;
     this.cols = Grid.createGrid(width, height);
-    this.start = this.get(0, 0);
-    this.finished = false;
-    this.destination = this.get(19, 19);
-  }
 
-  reset = () => {
-    this.cols = Grid.createGrid(this.width, this.height);
     this.start = this.get(0, 0);
+    this.start.setUnexplored();
+
+    this.destination = this.get(19, 19);
+    this.destination.setUnexplored();
+
     this.finished = false;
-    this.destination = this.get(5, 5);
   }
 
   get = (x: number, y: number) => {
     return this.cols[y][x];
-  }
-
-  setStart = (x: number, y: number) => {
-    this.start = this.get(x, y);
-  }
-
-  setDestination = (x: number, y: number) => {
-    this.destination = this.get(x, y);
   }
 
   setSearch = (search: Search) => {
