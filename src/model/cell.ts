@@ -59,19 +59,19 @@ export default class Cell {
     let color;
     switch (this.state) {
       case CellState.OBSTACLE:
-        color = 'black';
+        color = '#222831';
         break;
       case CellState.UNEXPLORED:
-        color = 'deepskyblue';
+        color = '#eeeeee';
         break;
       case CellState.EXPLORING:
-        color = 'blue';
+        color = '#d6c4c1';
         break;
       case CellState.EXPLORED:
-        color = 'grey';
+        color = '#bdbdbd';
         break;
       default:
-        color = 'black';
+        color = '#222831';
     }
     drawSquare(ctx, x, y, size, overrideColor || color);
   }

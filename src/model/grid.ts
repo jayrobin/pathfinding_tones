@@ -57,11 +57,11 @@ export default class Grid {
 
   render = (ctx: CanvasRenderingContext2D, renderAll: boolean = false) => {
     if (renderAll) {
-      this.drawUpdatedCells(ctx);
-    } else {
       this.drawAllCells(ctx);
+      this.drawGridLines(ctx);
+    } else {
+      this.drawUpdatedCells(ctx);
     }
-    this.drawGridLines(ctx);
 
     if (this.search && this.finished) {
       this.drawPath(ctx, this.search.getShortestPath());
@@ -76,28 +76,13 @@ export default class Grid {
     this.search.getUpdatedThisTick().forEach((cell) => {
       let overrideColor;
       if (cell === this.start) {
-        overrideColor = 'white';
+        overrideColor = '#00adb5';
       } else if (cell === this.destination) {
-        overrideColor = 'black';
+        overrideColor = '#bb596b';
       }
 
       cell.render(ctx, cell.x * this.cellSize, cell.y * this.cellSize, this.cellSize, overrideColor);
     });
-
-    for (let y = 0; y < this.height; y++) {
-      for (let x = 0; x < this.width; x++) {
-        const cell = this.get(x, y);
-
-        let overrideColor;
-        if (cell === this.start) {
-          overrideColor = 'white';
-        } else if (cell === this.destination) {
-          overrideColor = 'black';
-        }
-
-        cell.render(ctx, x * this.cellSize, y * this.cellSize, this.cellSize, overrideColor);
-      }
-    }
   }
 
   drawAllCells = (ctx: CanvasRenderingContext2D) => {
@@ -107,9 +92,9 @@ export default class Grid {
 
         let overrideColor;
         if (cell === this.start) {
-          overrideColor = 'white';
+          overrideColor = '#00adb5';
         } else if (cell === this.destination) {
-          overrideColor = 'red';
+          overrideColor = '#bb596b';
         }
 
         cell.render(ctx, x * this.cellSize, y * this.cellSize, this.cellSize, overrideColor);
