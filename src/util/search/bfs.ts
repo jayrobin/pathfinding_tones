@@ -25,6 +25,7 @@ export default class BFS {
       const unexploredNeighbors = next.getUnexploredNeighbors();
       unexploredNeighbors.forEach((neighbor) => {
         neighbor.setExploring();
+        neighbor.metadata.prev = next;
         this.queue.push(neighbor);
         this.updatedThisTick.push(neighbor);
       });
@@ -39,5 +40,16 @@ export default class BFS {
 
   getUpdatedThisTick = () => {
     return this.updatedThisTick;
+  }
+
+  getShortestPath = () => {
+    const path: Cell[] = [];
+    let node = this.destination;
+    while (node) {
+      path.push(node);
+      node = node.metadata.prev;
+    }
+
+    return path;
   }
 }
