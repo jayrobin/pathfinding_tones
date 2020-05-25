@@ -1,5 +1,5 @@
 import { drawLine } from '../util/draw';
-import Search from '../util/search';
+import { ISearch } from '../util/search';
 import Cell from './cell';
 
 type Pos = {
@@ -14,7 +14,7 @@ export default class Grid {
   cols: Cell[][];
   start: Cell;
   destination: Cell;
-  search?: Search;
+  search?: ISearch;
   finished: boolean;
 
   constructor(width: number, height: number, cellSize: number) {
@@ -36,7 +36,7 @@ export default class Grid {
     return this.cols[y][x];
   }
 
-  setSearch = (search: Search) => {
+  setSearch = (search: ISearch) => {
     this.search = search;
   }
 

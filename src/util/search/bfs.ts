@@ -1,17 +1,14 @@
 import Cell from '../../model/cell';
 import Grid from '../../model/grid';
+import Search from './index';
 
-export default class BFS {
-  grid: Grid;
-  destination: Cell;
+export default class BFS extends Search {
   queue: Cell[];
-  updatedThisTick: Cell[];
 
   constructor(grid: Grid, start: Cell, destination: Cell) {
-    this.grid = grid;
-    this.destination = destination;
+    super(grid, start, destination);
+
     this.queue = [start];
-    this.updatedThisTick = [];
   }
 
   tick = () => {
@@ -36,20 +33,5 @@ export default class BFS {
     } else {
       return true;
     }
-  }
-
-  getUpdatedThisTick = () => {
-    return this.updatedThisTick;
-  }
-
-  getShortestPath = () => {
-    const path: Cell[] = [];
-    let node = this.destination;
-    while (node) {
-      path.push(node);
-      node = node.metadata.prev;
-    }
-
-    return path;
   }
 }

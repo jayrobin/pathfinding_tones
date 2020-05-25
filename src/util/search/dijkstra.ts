@@ -1,22 +1,18 @@
 import TinyQueue from 'tinyqueue';
 import Cell from '../../model/cell';
 import Grid from '../../model/grid';
+import Search from './index';
 
-export default class Dijkstra {
-  grid: Grid;
-  destination: Cell;
+export default class Dijkstra extends Search {
   queue: TinyQueue<Cell>;
-  updatedThisTick: Cell[];
 
   constructor(grid: Grid, start: Cell, destination: Cell) {
-    this.grid = grid;
-    this.destination = destination;
+    super(grid, start, destination);
 
     start.metadata.distanceFromSource = 0;
     this.queue = new TinyQueue([start], (a, b) => {
       return a.metadata.distanceFromSource - b.metadata.distanceFromSource;
     });
-    this.updatedThisTick = [];
   }
 
   tick = () => {
@@ -46,20 +42,5 @@ export default class Dijkstra {
     } else {
       return true;
     }
-  }
-
-  getUpdatedThisTick = () => {
-    return this.updatedThisTick;
-  }
-
-  getShortestPath = () => {
-    const path: Cell[] = [];
-    let node = this.destination;
-    while (node) {
-      path.push(node);
-      node = node.metadata.prev;
-    }
-
-    return path;
   }
 }
