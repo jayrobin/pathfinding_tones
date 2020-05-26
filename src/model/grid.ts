@@ -83,9 +83,19 @@ export default class Grid {
       }
 
       cell.render(ctx, cell.x * this.cellSize, cell.y * this.cellSize, this.cellSize, overrideColor);
+    });
+  }
 
-      const maxDistance = this.start.distanceTo(this.destination);
-      playTone((maxDistance - cell.distanceTo(this.destination)) * 30, 10);
+  playTones = () => {
+    if (!this.search) {
+      return;
+    }
+
+    const MAX_FREQUENCY = 1200;
+    const maxDistance = this.start.distanceTo(this.destination);
+    this.search.getUpdatedThisTick().forEach((cell) => {
+      const normalizedFrequency = Math.floor(((maxDistance - cell.distanceTo(this.destination)) / maxDistance) * MAX_FREQUENCY);
+      playTone(normalizedFrequency, 10);
     });
   }
 

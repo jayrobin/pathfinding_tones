@@ -19,7 +19,7 @@ const Canvas = ({ grid, playing, tickDelay, onFinished }: Props) => {
       const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
       grid.render(ctx, initialRender);
     }
-  }, [grid])
+  }, [grid]);
 
   React.useEffect(() => renderGrid(true), [canvasHeight, canvasWidth, grid, renderGrid]);
   React.useEffect(() => {
@@ -30,6 +30,7 @@ const Canvas = ({ grid, playing, tickDelay, onFinished }: Props) => {
           onFinished();
         }
         renderGrid();
+        grid.playTones();
         timer = setTimeout(tick, tickDelay);
       }
     }
