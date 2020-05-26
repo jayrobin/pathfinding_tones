@@ -1,5 +1,6 @@
 import { drawLine } from '../util/draw';
 import { ISearch } from '../util/search';
+import { playTone } from '../util/tone';
 import Cell from './cell';
 
 type Pos = {
@@ -82,6 +83,9 @@ export default class Grid {
       }
 
       cell.render(ctx, cell.x * this.cellSize, cell.y * this.cellSize, this.cellSize, overrideColor);
+
+      const maxDistance = this.start.distanceTo(this.destination);
+      playTone((maxDistance - cell.distanceTo(this.destination)) * 30, 10);
     });
   }
 

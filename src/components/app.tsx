@@ -28,7 +28,7 @@ const App = () => {
     <div style={styles.container}>
       <h1>Pathfinding tones</h1>
       <div style={styles.canvasContainer}>
-        <Canvas grid={grid} playing={playing} tickDelay={10} onFinished={onFinished} />
+        <Canvas grid={grid} playing={playing} tickDelay={25} onFinished={onFinished} />
       </div>
       <button onClick={() => setPlaying(!playing)} disabled={grid.finished}>{playing ? 'Pause' : 'Play'}</button>
       <button onClick={reset}>Reset</button>
