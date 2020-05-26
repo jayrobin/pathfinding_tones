@@ -27,7 +27,7 @@ export default class Grid {
     this.start = this.get(0, 0);
     this.start.setUnexplored();
 
-    this.destination = this.get(19, 19);
+    this.destination = this.get(width - 1, height - 1);
     this.destination.setUnexplored();
 
     this.finished = false;
