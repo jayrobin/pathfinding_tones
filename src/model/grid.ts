@@ -12,6 +12,7 @@ export default class Grid {
   width: number;
   height: number;
   cellSize: number;
+  drawPathDuringSearch: boolean;
   cols: Cell[][];
   start: Cell;
   destination: Cell;
@@ -19,6 +20,7 @@ export default class Grid {
   finished: boolean;
 
   constructor(width: number, height: number, cellSize: number) {
+    this.drawPathDuringSearch = true;
     this.width = width;
     this.height = height;
     this.cellSize = cellSize;
@@ -57,15 +59,19 @@ export default class Grid {
   }
 
   render = (ctx: CanvasRenderingContext2D, renderAll: boolean = false) => {
-    if (renderAll) {
+    if (renderAll || this.drawPathDuringSearch) {
       this.drawAllCells(ctx);
       this.drawGridLines(ctx);
     } else {
       this.drawUpdatedCells(ctx);
     }
 
-    if (this.search && this.finished) {
-      this.drawPath(ctx, this.search.getShortestPath());
+    if (this.search) {
+      if (this.finished) {
+        this.drawPath(ctx, this.search.getShortestPath());
+      } else if (this.drawPathDuringSearch) {
+        this.drawPath(ctx, this.search.getPathFromStartToCell(this.search.getUpdatedThisTick()[0] as Cell));
+      }
     }
   }
 

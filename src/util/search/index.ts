@@ -5,6 +5,7 @@ export interface ISearch {
   tick: () => boolean;
   getUpdatedThisTick: () => Cell[];
   getShortestPath: () => Cell[];
+  getPathFromStartToCell: (cell: Cell) => Cell[];
 }
 
 export default class Search implements ISearch {
@@ -25,8 +26,12 @@ export default class Search implements ISearch {
   }
 
   getShortestPath = () => {
+    return this.getPathFromStartToCell(this.destination);
+  }
+
+  getPathFromStartToCell = (cell: Cell) => {
     const path: Cell[] = [];
-    let node = this.destination;
+    let node = cell;
     while (node) {
       path.push(node);
       node = node.metadata.prev;
