@@ -2,11 +2,13 @@ import React from 'react';
 import Grid from '../model/grid';
 import Dijkstra from '../util/search/dijkstra';
 import BFS from '../util/search/bfs';
+import DFS from '../util/search/dfs';
 import Canvas from './canvas';
 
 const ALGORITHMS = {
-  'Breadth-first search': BFS,
   'Dijkstra': Dijkstra,
+  'Breadth-first search': BFS,
+  'Depth-first search': DFS,
 };
 
 const getSearchAlgorithm = (algorithm: Algorithm, grid: Grid) => new ALGORITHMS[algorithm](grid, grid.start, grid.destination);
