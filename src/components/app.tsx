@@ -1,27 +1,38 @@
 import React from 'react';
 import Grid from '../model/grid';
 import Dijkstra from '../util/search/dijkstra';
+import BFS from '../util/search/bfs';
 import Canvas from './canvas';
 
-const App = () => {
-  const initGrid = () => {
-    const grid = new Grid(20, 20, 20);
-    const dijkstra = new Dijkstra(grid, grid.start, grid.destination);
-    grid.setSearch(dijkstra);
-    return grid;
-  }
+const ALGORITHMS = {
+  'Breadth-first search': BFS,
+  'Dijkstra': Dijkstra,
+};
 
+const getSearchAlgorithm = (algorithm: Algorithm, grid: Grid) => new ALGORITHMS[algorithm](grid, grid.start, grid.destination);
+
+type Algorithm = keyof typeof ALGORITHMS;
+
+const App = () => {
   const [playing, setPlaying] = React.useState(false);
-  const [grid, setGrid] = React.useState(initGrid());
+  const [algorithm, setAlgorithm] = React.useState<Algorithm>('Dijkstra');
+  const [grid, setGrid] = React.useState(new Grid(20, 20, 20));
+
+  React.useEffect(() => {
+    grid.reset();
+    grid.setSearch(getSearchAlgorithm(algorithm, grid));
+  }, [algorithm, grid]);
+
   const reset = () => {
-    setGrid(initGrid());
-    setPlaying(false);
-    const dijkstra = new Dijkstra(grid, grid.start, grid.destination);
-    grid.setSearch(dijkstra);
-  }
+    setGrid(new Grid(20, 20, 20));
+  };
 
   const onFinished = () => {
     setPlaying(false);
+  };
+
+  const onChangeAlgorithm = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setAlgorithm(e.currentTarget.value as Algorithm);
   }
 
   return (
@@ -30,7 +41,12 @@ const App = () => {
       <div style={styles.canvasContainer}>
         <Canvas grid={grid} playing={playing} tickDelay={25} onFinished={onFinished} />
       </div>
-      <button onClick={() => setPlaying(!playing)} disabled={grid.finished}>{playing ? 'Pause' : 'Play'}</button>
+      <select value={algorithm} onChange={onChangeAlgorithm}>
+        {Object.keys(ALGORITHMS).map((algorithmName) => {
+          return <option key={algorithmName} value={algorithmName}>{algorithmName}</option>
+        })}
+      </select>
+      <button onClick={() => setPlaying(!playing)}>{playing ? 'Pause' : 'Play'}</button>
       <button onClick={reset}>Reset</button>
     </div>
   );

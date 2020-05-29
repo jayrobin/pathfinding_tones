@@ -27,8 +27,11 @@ export default class Cell {
     }
   }
 
-  resetMetadata = () => {
+  reset = () => {
     this.metadata = {};
+    if (this.state !== CellState.OBSTACLE) {
+      this.state = CellState.UNEXPLORED;
+    }
   }
 
   addNeighbor = (neighbor: Cell) => {

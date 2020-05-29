@@ -43,6 +43,15 @@ export default class Grid {
     this.search = search;
   }
 
+  reset = () => {
+    this.cols.forEach((row) => {
+      row.forEach((cell) => {
+        cell.reset();
+      })
+    });
+    this.finished = false;
+  }
+
   tick = () => {
     if (this.search && !this.finished) {
       this.finished = this.search.tick();
