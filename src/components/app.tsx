@@ -3,12 +3,14 @@ import Grid from '../model/grid';
 import Dijkstra from '../util/search/dijkstra';
 import BFS from '../util/search/bfs';
 import DFS from '../util/search/dfs';
+import Random from '../util/search/random';
 import Canvas from './canvas';
 
 const ALGORITHMS = {
   'Dijkstra': Dijkstra,
   'Breadth-first search': BFS,
   'Depth-first search': DFS,
+  'Random': Random,
 };
 
 const getSearchAlgorithm = (algorithm: Algorithm, grid: Grid) => new ALGORITHMS[algorithm](grid.start, grid.destination);
