@@ -1,18 +1,12 @@
-import { drawLine } from '../util/draw';
 import { ISearch } from '../util/search';
 import { playTone } from '../util/tone';
 import Cell from './cell';
 
-type Pos = {
-  x: number;
-  y: number;
-}
-
 export default class Grid {
+  currentTick: number;
   width: number;
   height: number;
   cellSize: number;
-  drawPathDuringSearch: boolean;
   cols: Cell[][];
   start: Cell;
   destination: Cell;
@@ -20,7 +14,7 @@ export default class Grid {
   finished: boolean;
 
   constructor(width: number, height: number, cellSize: number) {
-    this.drawPathDuringSearch = true;
+    this.currentTick = 0;
     this.width = width;
     this.height = height;
     this.cellSize = cellSize;
@@ -49,11 +43,13 @@ export default class Grid {
         cell.reset();
       })
     });
+    this.currentTick = 0;
     this.finished = false;
   }
 
   tick = () => {
     if (this.search && !this.finished) {
+      this.currentTick++;
       this.finished = this.search.tick();
     }
 
@@ -67,38 +63,22 @@ export default class Grid {
     this.get(x, y).neighbors.forEach(c => c.state = 1)
   }
 
-  render = (ctx: CanvasRenderingContext2D, renderAll: boolean = false) => {
-    if (renderAll || this.drawPathDuringSearch) {
-      this.drawAllCells(ctx);
-      this.drawGridLines(ctx);
-    } else {
-      this.drawUpdatedCells(ctx);
+  getCurrentPath = () => {
+    if (!this.search) {
+      return [];
     }
 
-    if (this.search) {
-      if (this.finished) {
-        this.drawPath(ctx, this.search.getShortestPath());
-      } else if (this.drawPathDuringSearch) {
-        this.drawPath(ctx, this.search.getPathFromStartToCell(this.search.getUpdatedThisTick()[0] as Cell));
-      }
-    }
+    return this.finished ?
+      this.search.getShortestPath() :
+      this.search.getPathFromStartToCell(this.search.getUpdatedThisTick()[0] as Cell);
   }
 
-  drawUpdatedCells = (ctx: CanvasRenderingContext2D) => {
+  getUpdatedCells = (ctx: CanvasRenderingContext2D) => {
     if (!this.search) {
-      return;
+      return [];
     }
 
-    this.search.getUpdatedThisTick().forEach((cell) => {
-      let overrideColor;
-      if (cell === this.start) {
-        overrideColor = '#00adb5';
-      } else if (cell === this.destination) {
-        overrideColor = '#bb596b';
-      }
-
-      cell.render(ctx, cell.x * this.cellSize, cell.y * this.cellSize, this.cellSize, overrideColor);
-    });
+    return this.search.getUpdatedThisTick();
   }
 
   playTones = () => {
@@ -112,43 +92,6 @@ export default class Grid {
       const normalizedFrequency = Math.floor(((maxDistance - cell.distanceTo(this.destination)) / maxDistance) * MAX_FREQUENCY);
       playTone(normalizedFrequency, 10);
     });
-  }
-
-  drawAllCells = (ctx: CanvasRenderingContext2D) => {
-    for (let y = 0; y < this.height; y++) {
-      for (let x = 0; x < this.width; x++) {
-        const cell = this.get(x, y);
-
-        let overrideColor;
-        if (cell === this.start) {
-          overrideColor = '#00adb5';
-        } else if (cell === this.destination) {
-          overrideColor = '#bb596b';
-        }
-
-        cell.render(ctx, x * this.cellSize, y * this.cellSize, this.cellSize, overrideColor);
-      }
-    }
-  }
-
-  drawGridLines = (ctx: CanvasRenderingContext2D) => {
-    for (let y = 0; y < this.height; y++) {
-      drawLine(ctx, 0, y * this.cellSize, this.width * this.cellSize, y * this.cellSize, 'black', 0.3);
-    }
-
-    for (let x = 0; x < this.height; x++) {
-      drawLine(ctx, x * this.cellSize, 0, x * this.cellSize, this.height * this.cellSize, 'black', 0.3);
-    }
-  }
-
-  drawPath = (ctx: CanvasRenderingContext2D, path: Cell[]) => {
-    for (let i = 0; i < path.length - 1; i++) {
-      const { x: x1, y: y1 } = path[i];
-      const { x: x2, y: y2 } = path[i + 1];
-
-      const offset = Math.floor(this.cellSize / 2);
-      drawLine(ctx, x1 * this.cellSize + offset, y1 * this.cellSize + offset, x2 * this.cellSize + offset, y2 * this.cellSize + offset);
-    }
   }
 
   static createGrid(width: number, height: number) {

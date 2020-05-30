@@ -1,5 +1,4 @@
 import Cell from '../../model/cell';
-import Grid from '../../model/grid';
 
 export interface ISearch {
   tick: () => boolean;
@@ -9,12 +8,10 @@ export interface ISearch {
 }
 
 export default class Search implements ISearch {
-  grid: Grid;
   destination: Cell;
   updatedThisTick: Cell[];
 
-  constructor(grid: Grid, start: Cell, destination: Cell) {
-    this.grid = grid;
+  constructor(_start: Cell, destination: Cell) {
     this.destination = destination;
     this.updatedThisTick = [];
   }

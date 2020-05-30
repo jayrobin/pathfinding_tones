@@ -1,46 +1,25 @@
 import React from 'react';
 import Grid from '../model/grid';
+import { drawPathFromGridCoords, drawGrid, drawGridLines } from '../util/draw';
 
 type Props = {
   grid: Grid;
-  playing: boolean;
-  tickDelay: number;
-  onFinished: () => void;
 }
 
-const Canvas = ({ grid, playing, tickDelay, onFinished }: Props) => {
+const Canvas = ({ grid }: Props) => {
   const canvasWidth = grid.width * grid.cellSize;
   const canvasHeight = grid.height * grid.cellSize;
   const canvasRef = React.useRef<HTMLCanvasElement>(null);
 
-  const renderGrid = React.useCallback((initialRender: boolean = false) => {
+  React.useEffect(() => {
     const canvas = canvasRef.current;
     if (canvas) {
       const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
-      grid.render(ctx, initialRender);
+      drawGrid(ctx, grid);
+      drawGridLines(ctx, grid);
+      drawPathFromGridCoords(ctx, grid.getCurrentPath(), grid.cellSize)
     }
-  }, [grid]);
-
-  React.useEffect(() => renderGrid(true), [canvasHeight, canvasWidth, grid, renderGrid]);
-  React.useEffect(() => {
-    let timer: NodeJS.Timeout;
-    const tick = () => {
-      if (playing) {
-        if (grid.tick()) {
-          onFinished();
-        }
-        renderGrid();
-        grid.playTones();
-        timer = setTimeout(tick, tickDelay);
-      }
-    }
-
-    if (playing) {
-      tick();
-    }
-
-    return () => clearTimeout(timer);
-  }, [grid, onFinished, playing, renderGrid, tickDelay]);
+  }, [grid, grid.currentTick]);
 
   return (
     <>

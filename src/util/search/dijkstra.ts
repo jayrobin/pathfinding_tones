@@ -1,13 +1,12 @@
 import TinyQueue from 'tinyqueue';
 import Cell from '../../model/cell';
-import Grid from '../../model/grid';
 import Search from './index';
 
 export default class Dijkstra extends Search {
   queue: TinyQueue<Cell>;
 
-  constructor(grid: Grid, start: Cell, destination: Cell) {
-    super(grid, start, destination);
+  constructor(start: Cell, destination: Cell) {
+    super(start, destination);
 
     start.metadata.distanceFromSource = 0;
     this.queue = new TinyQueue([start], (a, b) => {

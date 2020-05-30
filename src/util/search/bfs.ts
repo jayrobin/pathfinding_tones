@@ -1,12 +1,11 @@
 import Cell from '../../model/cell';
-import Grid from '../../model/grid';
 import Search from './index';
 
 export default class BFS extends Search {
   queue: Cell[];
 
-  constructor(grid: Grid, start: Cell, destination: Cell) {
-    super(grid, start, destination);
+  constructor(start: Cell, destination: Cell) {
+    super(start, destination);
 
     this.queue = [start];
   }
