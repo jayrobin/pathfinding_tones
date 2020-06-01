@@ -1,17 +1,7 @@
 import React from 'react';
 import Grid from '../model/grid';
-import Dijkstra from '../util/search/dijkstra';
-import BFS from '../util/search/bfs';
-import DFS from '../util/search/dfs';
-import Random from '../util/search/random';
-import Canvas from './canvas';
-
-const ALGORITHMS = {
-  'Dijkstra': Dijkstra,
-  'Breadth-first search': BFS,
-  'Depth-first search': DFS,
-  'Random': Random,
-};
+import { ALGORITHMS } from '../util/search';
+import UI from './ui';
 
 const getSearchAlgorithm = (algorithm: Algorithm, grid: Grid) => new ALGORITHMS[algorithm](grid.start, grid.destination);
 
@@ -75,16 +65,14 @@ const App = () => {
   return (
     <div style={styles.container}>
       <h1>Pathfinding tones</h1>
-      <div style={styles.canvasContainer}>
-        <Canvas grid={grid} />
-      </div>
-      <select value={algorithm} onChange={onChangeAlgorithm}>
-        {Object.keys(ALGORITHMS).map((algorithmName) => {
-          return <option key={algorithmName} value={algorithmName}>{algorithmName}</option>
-        })}
-      </select>
-      <button onClick={onClickPlay}>{playing ? 'Pause' : 'Play'}</button>
-      <button onClick={onClickNewGrid}>New grid</button>
+      <UI
+        grid={grid}
+        playing={playing}
+        algorithm={algorithm}
+        onClickNewGrid={onClickNewGrid}
+        onClickPlay={onClickPlay}
+        onChangeAlgorithm={onChangeAlgorithm}
+      />
     </div>
   );
 }

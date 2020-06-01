@@ -1,6 +1,6 @@
 import TinyQueue from 'tinyqueue';
 import Cell from '../../model/cell';
-import Search from './index';
+import Search from './search';
 
 export default class Dijkstra extends Search {
   queue: TinyQueue<Cell>;

@@ -1,4 +1,4 @@
-import { ISearch } from '../util/search';
+import { ISearch } from '../util/search/search';
 import { playTone } from '../util/tone';
 import Cell from './cell';
 

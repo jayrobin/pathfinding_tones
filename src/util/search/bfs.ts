@@ -1,5 +1,5 @@
 import Cell from '../../model/cell';
-import Search from './index';
+import Search from './search';
 
 export default class BFS extends Search {
   queue: Cell[];
