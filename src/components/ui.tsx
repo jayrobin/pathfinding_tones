@@ -5,8 +5,9 @@ import Canvas from './canvas';
 
 type Props = {
   grid: Grid;
-  playing: boolean;
   algorithm: string;
+  playing: boolean;
+  showDebugOutput?: boolean;
   onClickPlay: () => void;
   onClickNewGrid: () => void;
   onChangeAlgorithm: (e: React.ChangeEvent<HTMLSelectElement>) => void;
@@ -14,8 +15,9 @@ type Props = {
 
 const UI = ({
   grid,
-  playing,
   algorithm,
+  playing,
+  showDebugOutput,
   onClickPlay,
   onClickNewGrid,
   onChangeAlgorithm,
@@ -31,6 +33,7 @@ const UI = ({
           return <option key={algorithmName} value={algorithmName}>{algorithmName}</option>
         })}
       </select>
+      {showDebugOutput && <textarea defaultValue={grid.getDebugOutput()} disabled />}
       <button onClick={onClickPlay}>{playing ? 'Pause' : 'Play'}</button>
       <button onClick={onClickNewGrid}>New grid</button>
     </>

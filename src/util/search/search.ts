@@ -5,6 +5,7 @@ export interface ISearch {
   getUpdatedThisTick: () => Cell[];
   getShortestPath: () => Cell[];
   getPathFromStartToCell: (cell: Cell) => Cell[];
+  getDebugOutput: () => string;
 }
 
 export default class Search implements ISearch {
@@ -36,4 +37,6 @@ export default class Search implements ISearch {
 
     return path;
   }
+
+  getDebugOutput = () => '';
 }

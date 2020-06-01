@@ -94,6 +94,10 @@ export default class Grid {
     });
   }
 
+  getDebugOutput = () => {
+    return this.search?.getDebugOutput() || '';
+  }
+
   static createGrid(width: number, height: number) {
     const cols = [];
     for (let y = 0; y < height; y++) {

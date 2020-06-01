@@ -2,18 +2,18 @@ import Cell from '../../model/cell';
 import Search from './search';
 
 export default class DFS extends Search {
-  queue: Cell[];
+  stack: Cell[];
 
   constructor(start: Cell, destination: Cell) {
     super(start, destination);
 
-    this.queue = [start];
+    this.stack = [start];
   }
 
   tick = () => {
-    if (this.queue.length) {
+    if (this.stack.length) {
       this.updatedThisTick = [];
-      const next = this.queue.pop() as Cell;
+      const next = this.stack.pop() as Cell;
       if (next === this.destination) {
         return true;
       }
@@ -22,7 +22,7 @@ export default class DFS extends Search {
       unexploredNeighbors.forEach((neighbor) => {
         neighbor.setExploring();
         neighbor.metadata.prev = next;
-        this.queue.push(neighbor);
+        this.stack.push(neighbor);
         this.updatedThisTick.push(neighbor);
       });
       next.setExplored();
@@ -32,5 +32,11 @@ export default class DFS extends Search {
     } else {
       return true;
     }
+  }
+
+  getDebugOutput = () => {
+    let debugOutput = 'Stack\n';
+    debugOutput += this.stack.map(({ x, y }) => `(${x}, ${y})`).join('\n');
+    return debugOutput;
   }
 }

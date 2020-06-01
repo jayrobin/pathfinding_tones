@@ -33,4 +33,10 @@ export default class BFS extends Search {
       return true;
     }
   }
+
+  getDebugOutput = () => {
+    let debugOutput = 'Queue\n';
+    debugOutput += this.queue.map(({ x, y }) => `(${x}, ${y})`).join('\n');
+    return debugOutput;
+  }
 }

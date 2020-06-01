@@ -42,4 +42,10 @@ export default class Dijkstra extends Search {
       return true;
     }
   }
+
+  getDebugOutput = () => {
+    let debugOutput = 'Queue\n';
+    debugOutput += this.queue.data.map(({ x, y, metadata }) => `(${x}, ${y}) ${metadata.distanceFromSource}`).join('\n');
+    return debugOutput;
+  }
 }
