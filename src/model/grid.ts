@@ -73,7 +73,15 @@ export default class Grid {
       this.search.getPathFromStartToCell(this.search.getUpdatedThisTick()[0] as Cell);
   }
 
-  getUpdatedCells = (ctx: CanvasRenderingContext2D) => {
+  getNumExplored = () => {
+    return this.cols.reduce((sum, row) => {
+      return sum + row.reduce((rowSum, cell) => {
+        return rowSum + (cell.isExplored() ? 1 : 0)
+      },0)
+    }, 0);
+  }
+
+  getUpdatedCells = () => {
     if (!this.search) {
       return [];
     }

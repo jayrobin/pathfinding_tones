@@ -50,6 +50,10 @@ export default class Cell {
     this.state = CellState.EXPLORING;
   }
 
+  isExplored = () => {
+    return this.state === CellState.EXPLORED;
+  }
+
   getUnexploredNeighbors = () => {
     return this.neighbors.filter(({ state }) => state === CellState.UNEXPLORED);
   }

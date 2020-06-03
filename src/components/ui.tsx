@@ -33,9 +33,11 @@ const UI = ({
           return <option key={algorithmName} value={algorithmName}>{algorithmName}</option>
         })}
       </select>
-      {showDebugOutput && <textarea defaultValue={grid.getDebugOutput()} disabled />}
       <button onClick={onClickPlay}>{playing ? 'Pause' : 'Play'}</button>
       <button onClick={onClickNewGrid}>New grid</button>
+      {showDebugOutput && <textarea defaultValue={grid.getDebugOutput()} disabled />}
+      <p>Explored: {grid.getNumExplored()}</p>
+      <p>Current path length: {grid.getCurrentPath().length}</p>
     </>
   )
 }
