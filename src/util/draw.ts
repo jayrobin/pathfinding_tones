@@ -8,7 +8,7 @@ export const drawSquare = (ctx: CanvasRenderingContext2D, x: number, y: number, 
 
 export const drawLine = (ctx: CanvasRenderingContext2D, x1: number, y1: number, x2: number, y2: number, color = 'black', alpha = 1.0) => {
   ctx.globalAlpha = alpha;
-  ctx.fillStyle = color;
+  ctx.strokeStyle = color;
   ctx.beginPath();
   ctx.moveTo(x1, y1);
   ctx.lineTo(x2, y2);
