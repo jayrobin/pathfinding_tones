@@ -47,10 +47,11 @@ const App = () => {
     const nextTick = () => {
       if (playing) {
         if (grid.tick()) {
+          grid.playTonesForCurrentPath();
           setPlaying(false);
         } else {
           setTick(tick => tick + 1);
-          grid.playTones();
+          grid.playTonesForUpdatedCells();
           timer = setTimeout(nextTick, 25);
         }
       }

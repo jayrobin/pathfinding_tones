@@ -1,5 +1,5 @@
 import { ISearch } from '../util/search/search';
-import { playTone } from '../util/tone';
+import { playTones } from '../util/tone';
 import Cell from './cell';
 
 export default class Grid {
@@ -89,16 +89,25 @@ export default class Grid {
     return this.search.getUpdatedThisTick();
   }
 
-  playTones = () => {
+  playTonesForUpdatedCells = () => {
     if (!this.search) {
       return;
     }
 
-    const MAX_FREQUENCY = 1200;
+    const tonesForUpdatedCells = this.getNormalizedFrequenciesForCells(this.search.getUpdatedThisTick());
+    playTones(tonesForUpdatedCells);
+  }
+
+  playTonesForCurrentPath = () => {
+    const tonesForCurrentPath = this.getNormalizedFrequenciesForCells(this.getCurrentPath());
+    playTones(tonesForCurrentPath);
+  }
+
+  getNormalizedFrequenciesForCells = (cells: Cell[]) => {
+    const MAX_FREQUENCY = 2000;
     const maxDistance = this.start.distanceTo(this.destination);
-    this.search.getUpdatedThisTick().forEach((cell) => {
-      const normalizedFrequency = Math.floor(((maxDistance - cell.distanceTo(this.destination)) / maxDistance) * MAX_FREQUENCY);
-      playTone(normalizedFrequency, 10);
+    return cells.map((cell) => {
+      return Math.floor(((maxDistance - cell.distanceTo(this.destination)) / maxDistance) * MAX_FREQUENCY);
     });
   }
 

@@ -24,7 +24,7 @@ export default class Search implements ISearch {
   }
 
   getShortestPath = () => {
-    return this.getPathFromStartToCell(this.destination);
+    return this.getPathFromStartToCell(this.destination).reverse();
   }
 
   getPathFromStartToCell = (cell: Cell) => {
@@ -35,7 +35,7 @@ export default class Search implements ISearch {
       node = node.metadata.prev;
     }
 
-    return path;
+    return path.reverse();
   }
 
   getDebugOutput = () => '';

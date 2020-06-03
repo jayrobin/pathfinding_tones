@@ -33,3 +33,14 @@ export const playTone = (frequency: number, duration: number = 10) => {
     }, duration);
   }
 }
+
+export const playTones = (frequencies: number[], duration: number = 20) => {
+  if (!frequencies.length) {
+    return;
+  }
+
+  playTone(frequencies[0], duration);
+  setTimeout(() => {
+    playTones(frequencies.slice(1));
+  }, duration);
+}
