@@ -11,6 +11,7 @@ type Props = {
   onClickPlay: () => void;
   onClickNewGrid: () => void;
   onChangeAlgorithm: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  onDraw: () => void;
 }
 
 const UI = ({
@@ -21,12 +22,12 @@ const UI = ({
   onClickPlay,
   onClickNewGrid,
   onChangeAlgorithm,
+  onDraw,
   }: Props) => {
-
   return (
     <>
       <div style={styles.canvasContainer}>
-        <Canvas grid={grid} />
+        <Canvas onMouseDown={onDraw} grid={grid} />
       </div>
       <select value={algorithm} onChange={onChangeAlgorithm}>
         {Object.keys(ALGORITHMS).map((algorithmName) => {
@@ -34,7 +35,7 @@ const UI = ({
         })}
       </select>
       <button onClick={onClickPlay}>{playing ? 'Pause' : 'Play'}</button>
-      <button onClick={onClickNewGrid}>New grid</button>
+      <button onClick={onClickNewGrid}>Reset</button>
       {showDebugOutput && <textarea defaultValue={grid.getDebugOutput()} disabled />}
       <p>Explored: {grid.getNumExplored()}</p>
       <p>Current path length: {grid.getCurrentPath().length}</p>

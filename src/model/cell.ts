@@ -1,6 +1,6 @@
 import { drawSquare } from '../util/draw';
 
-enum CellState {
+export enum CellState {
   OBSTACLE,
   UNEXPLORED,
   EXPLORING,
@@ -21,10 +21,6 @@ export default class Cell {
     this.y = y;
     this.neighbors = [];
     this.metadata = {};
-
-    if (Math.random() > 0.75) {
-      this.state = CellState.OBSTACLE;
-    }
   }
 
   reset = () => {
@@ -54,12 +50,16 @@ export default class Cell {
     return this.state === CellState.EXPLORED;
   }
 
+  isObstacle = () => {
+    return this.state === CellState.OBSTACLE;
+  }
+
   getNeighbors = () => {
     return this.neighbors.filter(({ state }) => state !== CellState.OBSTACLE);
   }
 
   getUnexploredNeighbors = () => {
-    return this.neighbors.filter(({ state }) => state === CellState.UNEXPLORED);
+    return this.neighbors.filter(({ state }) => state === CellState.UNEXPLORED || state === CellState.EXPLORING);
   }
 
   distanceTo = (cell: Cell) => {
@@ -68,6 +68,10 @@ export default class Cell {
 
   euclideanDistanceTo = (cell: Cell) => {
     return Math.sqrt(Math.pow(this.x - cell.x, 2) + Math.pow(this.y - cell.y, 2));
+  }
+
+  toggleWall = () => {
+    this.state = this.state === CellState.OBSTACLE ? CellState.UNEXPLORED : CellState.OBSTACLE;
   }
 
   render = (ctx: CanvasRenderingContext2D, x: number, y: number, size: number, overrideColor?: string) => {

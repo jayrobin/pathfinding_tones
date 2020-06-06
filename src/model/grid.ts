@@ -1,6 +1,6 @@
 import { ISearch } from '../util/search/search';
 import { playTones } from '../util/tone';
-import Cell from './cell';
+import Cell, { CellState } from './cell';
 
 export default class Grid {
   currentTick: number;
@@ -23,7 +23,7 @@ export default class Grid {
     this.start = this.get(5, 5);
     this.start.setUnexplored();
 
-    this.destination = this.get(width - 1, height - 1);
+    this.destination = this.get(width - 6, height - 6);
     this.destination.setUnexplored();
 
     this.finished = false;
@@ -31,6 +31,21 @@ export default class Grid {
 
   get = (x: number, y: number) => {
     return this.cols[y][x];
+  }
+
+  getCellAtScreen = (screenX: number, screenY: number) => {
+    const x = Math.floor(screenX / this.cellSize);
+    const y = Math.floor(screenY / this.cellSize);
+    return this.get(x, y);
+  }
+
+  setCellStateAtScreen = (screenX: number, screenY: number, state: CellState) => {
+    const x = Math.floor(screenX / this.cellSize);
+    const y = Math.floor(screenY / this.cellSize);
+    const previousState = this.get(x, y).state;
+    this.get(x, y).state = state;
+
+    return previousState !== state;
   }
 
   setSearch = (search: ISearch) => {
@@ -57,10 +72,7 @@ export default class Grid {
   }
 
   onClick = (screenX: number, screenY: number) => {
-    const x = Math.floor(screenX / this.cellSize);
-    const y = Math.floor(screenY / this.cellSize);
-    this.get(x, y).state = 1;
-    this.get(x, y).neighbors.forEach(c => c.state = 1)
+    this.getCellAtScreen(screenX, screenY).toggleWall();
   }
 
   getCurrentPath = () => {

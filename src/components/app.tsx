@@ -10,16 +10,17 @@ type Algorithm = keyof typeof ALGORITHMS;
 const App = () => {
   const [playing, setPlaying] = React.useState(false);
   const [algorithm, setAlgorithm] = React.useState<Algorithm>('A*');
-  const [grid, setGrid] = React.useState(new Grid(20, 20, 20));
+  const [grid, setGrid] = React.useState(new Grid(30, 30, 15));
   const [_, setTick] = React.useState(0);
 
   const onClickNewGrid = () => {
     setPlaying(false);
     setTick(0);
-    setGrid(new Grid(20, 20, 20));
+    setGrid(new Grid(30, 30, 15));
   };
 
   const resetGrid = React.useCallback(() => {
+    setTick(0);
     grid.reset();
     grid.setSearch(getSearchAlgorithm(algorithm, grid));
   }, [algorithm, grid]);
@@ -30,16 +31,19 @@ const App = () => {
 
   const onClickPlay = () => {
     if (grid.finished) {
-      setTick(0);
       resetGrid();
     }
     setPlaying(!playing);
   }
 
-  React.useEffect(() => {
-    setPlaying(false);
-    setTick(0);
+  const onDraw = () => {
     resetGrid();
+    setPlaying(false);
+  }
+
+  React.useEffect(() => {
+    resetGrid();
+    setPlaying(false);
   }, [algorithm, grid, resetGrid]);
 
   React.useEffect(() => {
@@ -73,6 +77,7 @@ const App = () => {
         onClickNewGrid={onClickNewGrid}
         onClickPlay={onClickPlay}
         onChangeAlgorithm={onChangeAlgorithm}
+        onDraw={onDraw}
       />
     </div>
   );
