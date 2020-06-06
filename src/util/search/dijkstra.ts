@@ -31,7 +31,9 @@ export default class Dijkstra extends Search {
           neighbor.metadata.distanceFromSource = distanceFromSourceToNeighbor;
           neighbor.metadata.prev = next;
         }
-        this.queue.push(neighbor);
+        if (!this.queue.data.includes(neighbor)) {
+          this.queue.push(neighbor);
+        }
         this.updatedThisTick.push(neighbor);
       });
       next.setExplored();

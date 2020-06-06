@@ -54,12 +54,20 @@ export default class Cell {
     return this.state === CellState.EXPLORED;
   }
 
+  getNeighbors = () => {
+    return this.neighbors.filter(({ state }) => state !== CellState.OBSTACLE);
+  }
+
   getUnexploredNeighbors = () => {
     return this.neighbors.filter(({ state }) => state === CellState.UNEXPLORED);
   }
 
   distanceTo = (cell: Cell) => {
     return Math.abs(this.x - cell.x) + Math.abs(this.y - cell.y);
+  }
+
+  euclideanDistanceTo = (cell: Cell) => {
+    return Math.sqrt(Math.pow(this.x - cell.x, 2) + Math.pow(this.y - cell.y, 2));
   }
 
   render = (ctx: CanvasRenderingContext2D, x: number, y: number, size: number, overrideColor?: string) => {

@@ -9,7 +9,7 @@ type Algorithm = keyof typeof ALGORITHMS;
 
 const App = () => {
   const [playing, setPlaying] = React.useState(false);
-  const [algorithm, setAlgorithm] = React.useState<Algorithm>('Dijkstra');
+  const [algorithm, setAlgorithm] = React.useState<Algorithm>('A*');
   const [grid, setGrid] = React.useState(new Grid(20, 20, 20));
   const [_, setTick] = React.useState(0);
 

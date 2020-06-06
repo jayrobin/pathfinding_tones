@@ -22,7 +22,9 @@ export default class BFS extends Search {
       unexploredNeighbors.forEach((neighbor) => {
         neighbor.setExploring();
         neighbor.metadata.prev = next;
-        this.queue.push(neighbor);
+        if (!this.queue.includes(neighbor)) {
+          this.queue.push(neighbor);
+        }
         this.updatedThisTick.push(neighbor);
       });
       next.setExplored();

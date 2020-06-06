@@ -20,7 +20,7 @@ export default class Grid {
     this.cellSize = cellSize;
     this.cols = Grid.createGrid(width, height);
 
-    this.start = this.get(0, 0);
+    this.start = this.get(5, 5);
     this.start.setUnexplored();
 
     this.destination = this.get(width - 1, height - 1);
@@ -70,7 +70,7 @@ export default class Grid {
 
     return this.finished ?
       this.search.getShortestPath() :
-      this.search.getPathFromStartToCell(this.search.getUpdatedThisTick()[0] as Cell);
+      this.search.getPathFromStartToCell(this.search.getUpdatedThisTick().slice(-1)[0] as Cell);
   }
 
   getNumExplored = () => {
@@ -99,7 +99,7 @@ export default class Grid {
   }
 
   playTonesForCurrentPath = () => {
-    const tonesForCurrentPath = this.getNormalizedFrequenciesForCells(this.getCurrentPath());
+    const tonesForCurrentPath = this.getNormalizedFrequenciesForCells(this.getCurrentPath().reverse());
     playTones(tonesForCurrentPath);
   }
 
@@ -144,6 +144,20 @@ export default class Grid {
         if (y < height - 1) {
           cell.addNeighbor(cols[x][y + 1]);
         }
+
+        // diagonal neighbors
+        // if (x > 0 && y > 0) {
+        //   cell.addNeighbor(cols[x - 1][y - 1]);
+        // }
+        // if (x < width - 1 && y > 0) {
+        //   cell.addNeighbor(cols[x + 1][y - 1]);
+        // }
+        // if (x > 0 && y < height - 1) {
+        //   cell.addNeighbor(cols[x - 1][y + 1]);
+        // }
+        // if (x > width - 1 && y < height - 1) {
+        //   cell.addNeighbor(cols[x + 1][y + 1]);
+        // }
       })
     });
     return cols;
