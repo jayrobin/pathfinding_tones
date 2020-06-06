@@ -49,7 +49,7 @@ export default class AStar extends Search {
 
   getDebugOutput = () => {
     let debugOutput = 'Queue\n';
-    debugOutput += this.openSet.data.map(({ x, y, metadata }) => `(${x}, ${y}) ${metadata.distanceFromSource}`).join('\n');
+    debugOutput += this.openSet.data.map(({ x, y, metadata }) => `(${x}, ${y}) ${metadata.fScore.toFixed(3)}`).join('\n');
     return debugOutput;
   }
 }
