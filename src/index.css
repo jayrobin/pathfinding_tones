@@ -4,7 +4,7 @@ body {
   align-items: center;
   justify-content: center;
   height: 100%;
-  background: #333;
-  font-family: "PT Sans";
-  color: #eee;
+  background: #222831;
+  font-family: 'Noto Sans', 'PT Sans', sans-serif;
+  color: #eeeeee;
 }
