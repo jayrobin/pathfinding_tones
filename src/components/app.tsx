@@ -69,28 +69,31 @@ const App = () => {
 
   return (
     <div style={styles.container}>
-      <h1>Pathfinding tones</h1>
-      <UI
-        grid={grid}
-        playing={playing}
-        algorithm={algorithm}
-        onClickNewGrid={onClickNewGrid}
-        onClickPlay={onClickPlay}
-        onChangeAlgorithm={onChangeAlgorithm}
-        onDraw={onDraw}
-      />
+      <h2>The sound of pathfinding</h2>
+      <p><strong>Why I built this:</strong> I wanted to know what different pathfinding algorithms sounded like</p>
+      <div style={styles.canvasContainer}>
+        <UI
+          grid={grid}
+          playing={playing}
+          algorithm={algorithm}
+          onClickNewGrid={onClickNewGrid}
+          onClickPlay={onClickPlay}
+          onChangeAlgorithm={onChangeAlgorithm}
+          onDraw={onDraw}
+        />
+      </div>
     </div>
   );
 }
 
 const styles = {
   container: {
-    alignItems: 'center',
+    alignItems: 'flex-start',
     display: 'flex',
     flexDirection: 'column' as 'column',
   },
   canvasContainer: {
-    margin: '25px'
+    alignSelf: 'center',
   }
 };
 
