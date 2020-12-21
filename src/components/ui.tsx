@@ -8,9 +8,11 @@ type Props = {
   grid: Grid;
   algorithm: string;
   playing: boolean;
+  delay: number;
   onClickPlay: () => void;
   onClickNewGrid: () => void;
   onChangeAlgorithm: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  onChangeDelay: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onDraw: () => void;
 }
 
@@ -18,9 +20,11 @@ const UI = ({
   grid,
   algorithm,
   playing,
+  delay,
   onClickPlay,
   onClickNewGrid,
   onChangeAlgorithm,
+  onChangeDelay,
   onDraw,
   }: Props) => {
   const [showDebugOutput, setShowDebugOutput] = React.useState(false);
@@ -46,7 +50,8 @@ const UI = ({
       </p>
       {showDebugOutput && (
         <>
-          <textarea defaultValue={grid.getDebugOutput()} disabled />
+          <label>Step delay (ms)<input type="number" value={delay} min="10" max="500" step="25" onChange={onChangeDelay} /></label>
+          {/* <textarea defaultValue={grid.getDebugOutput()} disabled /> */}
           <p>Explored: {grid.getNumExplored()}</p>
           <p>Current path length: {grid.getCurrentPath().length}</p>
         </>

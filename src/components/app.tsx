@@ -10,6 +10,7 @@ type Algorithm = keyof typeof ALGORITHMS;
 const App = () => {
   const [playing, setPlaying] = React.useState(false);
   const [algorithm, setAlgorithm] = React.useState<Algorithm>('A*');
+  const [delay, setDelay] = React.useState<number>(25);
   const [grid, setGrid] = React.useState(new Grid(30, 30, 15));
   const [_, setTick] = React.useState(0);
 
@@ -27,6 +28,10 @@ const App = () => {
 
   const onChangeAlgorithm = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setAlgorithm(e.currentTarget.value as Algorithm);
+  };
+
+  const onChangeDelay = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setDelay(Number(e.currentTarget.value));
   };
 
   const onClickPlay = () => {
@@ -56,7 +61,7 @@ const App = () => {
         } else {
           setTick(tick => tick + 1);
           grid.playTonesForUpdatedCells();
-          timer = setTimeout(nextTick, 25);
+          timer = setTimeout(nextTick, delay);
         }
       }
     }
@@ -65,7 +70,7 @@ const App = () => {
     }
 
     return () => clearTimeout(timer);
-  }, [playing, grid]);
+  }, [playing, grid, delay]);
 
   return (
     <div style={styles.container}>
@@ -76,9 +81,11 @@ const App = () => {
           grid={grid}
           playing={playing}
           algorithm={algorithm}
+          delay={delay}
           onClickNewGrid={onClickNewGrid}
           onClickPlay={onClickPlay}
           onChangeAlgorithm={onChangeAlgorithm}
+          onChangeDelay={onChangeDelay}
           onDraw={onDraw}
         />
       </div>
