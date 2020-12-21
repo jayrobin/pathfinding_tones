@@ -18,7 +18,7 @@ const Dropdown = ({ value, options, onChange }: Props) => {
 
 const styles = {
   select: {
-    width: '100%',
+    width: '50%',
     padding: '10px',
   },
 };
