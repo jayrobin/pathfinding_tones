@@ -46,11 +46,11 @@ export const drawGrid = (ctx: CanvasRenderingContext2D, grid: Grid) => {
 
 
 export const drawGridLines = (ctx: CanvasRenderingContext2D, grid: Grid) => {
-  for (let y = 0; y < grid.height; y++) {
+  for (let y = 0; y <= grid.height; y++) {
     drawLine(ctx, 0, y * grid.cellSize, grid.width * grid.cellSize, y * grid.cellSize, 'black', 0.3);
   }
 
-  for (let x = 0; x < grid.height; x++) {
+  for (let x = 0; x <= grid.height; x++) {
     drawLine(ctx, x * grid.cellSize, 0, x * grid.cellSize, grid.height * grid.cellSize, 'black', 0.3);
   }
 }
