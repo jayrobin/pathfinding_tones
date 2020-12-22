@@ -74,14 +74,13 @@ const App = () => {
 
   return (
     <div style={styles.container}>
-      <h2>The sound of pathfinding</h2>
+      <h2>The sound of pathfinding <a href="https://github.com/jayrobin/pathfinding_tones" target="_blank" rel="noopener noreferrer nofollow">(source)</a></h2>
       <p>
         <strong>Why I built this:</strong>
         Inspired by the classic <a href="https://www.youtube.com/watch?v=kPRA0W1kECg" target="_blank" rel="noopener noreferrer nofollow">15 Sorting Algorithms in 6 minutes</a> I
         wanted to know what different pathfinding algorithms <em>sound</em> like.
       </p>
       <p>A note is played every time a node is explored, with a pitch relative to the Manhattan distance between the node and the goal.</p>
-      <p></p>
       <div style={styles.canvasContainer}>
         <UI
           grid={grid}
