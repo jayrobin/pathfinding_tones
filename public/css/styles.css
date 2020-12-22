@@ -38,6 +38,12 @@ a {
   transition: opacity 0.3s ease-in-out;
 }
 
+a:hover {
+  color: var(--color-link);
+  opacity: 0.8;
+  text-decoration: none;
+}
+
 footer {
   background-color: var(--color-bg-shaded);
   bottom: 0;
